@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import numpy
-import matplotlib.pyplot as plot
 import pandas
 from sklearn.preprocessing import Imputer, LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.model_selection import train_test_split

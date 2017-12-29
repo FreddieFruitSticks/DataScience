@@ -37,22 +37,24 @@ Data_Preprocessing/Data.csv"""
         self.independent_vars[:, 1:3] = imputer.transform(self.independent_vars[:, 1:3])
         return self.independent_vars
     
-    def add_dummy_variables(self):    
+    def add_dummy_variables(self, encode_dep=False, columns=[0]):    
         #convert categorical data in to numbers
         label_encoder_indep_vars = LabelEncoder()
-        self.independent_vars[:, 0] = label_encoder_indep_vars.fit_transform(self.independent_vars[:, 0])
-        label_encoder_dep_vars = LabelEncoder()
-        self.dependent_vars = label_encoder_dep_vars.fit_transform(self.dependent_vars)
+        self.independent_vars[:, columns[0]] = label_encoder_indep_vars.fit_transform(self.independent_vars[:, columns[0]])
+
+        if encode_dep:
+            label_encoder_dep_vars = LabelEncoder()
+            self.dependent_vars = label_encoder_dep_vars.fit_transform(self.dependent_vars)
         
         #convert categorical data in to three columns of 0 or 1 dummy variables
-        one_hot_encoder = OneHotEncoder(categorical_features = [0])
+        one_hot_encoder = OneHotEncoder(categorical_features = [columns[0]])
         self.independent_vars = one_hot_encoder.fit_transform(self.independent_vars).toarray()
         return self.independent_vars, self.dependent_vars
     
     def partition_training_test(self):
         #partition randomly in to training and test data
         self.indep_train, self.indep_test, self.dep_train, self.dep_test = \
-        train_test_split(self.independent_vars, self.dependent_vars, test_size=0.25, random_state=43)
+        train_test_split(self.independent_vars, self.dependent_vars, test_size=0.2, random_state=43)
         return self.indep_train, self.indep_test, self.dep_train, self.dep_test
         
     def feature_scaling(self):    
@@ -61,4 +63,14 @@ Data_Preprocessing/Data.csv"""
         self.indep_train[:,3:5] = sc_indep.fit_transform(self.indep_train[:,3:5])
         self.indep_test[:,3:5] = sc_indep.fit_transform(self.indep_test[:,3:5])
         return self.indep_train, self.indep_test
+    
+    def plot(self, indep_vars, dep_vars, regressor, X_poly_grid=None, indep_plot_grid=None):
+        plot.scatter(indep_vars, dep_vars, color='red')
+        if X_poly_grid is None or X_poly_grid.any() is None :
+            plot.plot(indep_plot_grid, regressor.predict(indep_plot_grid),color='blue')
+        else:
+            plot.plot(X_poly_grid, regressor.predict(X_poly_grid), color='blue')
+
+
+
         
