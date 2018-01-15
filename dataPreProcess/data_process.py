@@ -54,15 +54,14 @@ Data_Preprocessing/Data.csv"""
     def partition_training_test(self):
         #partition randomly in to training and test data
         self.indep_train, self.indep_test, self.dep_train, self.dep_test = \
-        train_test_split(self.independent_vars, self.dependent_vars, test_size=0.2, random_state=43)
+        train_test_split(self.independent_vars, self.dependent_vars, test_size=0.25, random_state=0)
         return self.indep_train, self.indep_test, self.dep_train, self.dep_test
         
-    def feature_scaling(self):    
+    def feature_scaling(self, indep_vars, col_interval):    
         #feature scaling
         sc_indep = StandardScaler()
-        self.indep_train[:,3:5] = sc_indep.fit_transform(self.indep_train[:,3:5])
-        self.indep_test[:,3:5] = sc_indep.fit_transform(self.indep_test[:,3:5])
-        return self.indep_train, self.indep_test
+        self.independent_vars = sc_indep.fit_transform(indep_vars)
+        return self.independent_vars
     
     def plot(self, indep_vars, dep_vars, regressor, X_poly_grid=None, indep_plot_grid=None):
         plot.scatter(indep_vars, dep_vars, color='red')
