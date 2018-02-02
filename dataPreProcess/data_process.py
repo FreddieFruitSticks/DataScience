@@ -24,8 +24,8 @@ Data_Preprocessing/Data.csv"""
     def __init__(self, data_file=data_file):
         self.data_file = data_file
         
-    def prepare_data_frame(self, indep_interval, dep_interval):        
-        data_frame = pandas.read_csv(self.data_file)
+    def prepare_data_frame(self, indep_interval, dep_interval, header='infer'):        
+        data_frame = pandas.read_csv(self.data_file, header=header)
         self.independent_vars = data_frame.iloc[:, indep_interval[0] : indep_interval[1]].values
         self.dependent_vars = data_frame.iloc[:, dep_interval[0] : dep_interval[1]].values
         return self.independent_vars, self.dependent_vars, data_frame
