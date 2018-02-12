@@ -43,7 +43,7 @@ for i in range(1, 10000):
     ad = UCB_score.index(max(UCB_score))
 
 print(ads_chosen)
-
+print(sum(sum_rewards))
 print(UCB_score)
 
 plot.hist(ads_selected)
