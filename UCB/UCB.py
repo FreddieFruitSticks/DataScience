@@ -15,14 +15,6 @@ indep_vars, dep_vars, data_frame = prep.prepare_data_frame([2,4], [4,5])
 users = 10000
 ads = 9
 reward = 0
-#ads_chosen = []
-#for i in range(0,10000):
-#    ad = random.randrange(ads + 1)
-#    value = data_frame.values[i,ad]
-#    reward = reward + value
-#    ads_chosen.append(ad)
-#    
-#plot.hist(ads_chosen)
 
 ads_chosen = [1]*(ads+1)
 sum_rewards = [0]*(ads+1)

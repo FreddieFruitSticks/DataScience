@@ -15,3 +15,24 @@ indep_vars, dep_vars, data_frame = prep.prepare_data_frame([2,4], [4,5])
 users = 10000
 ads = 9
 reward = 0
+
+number_of_successes = [0]*(ads+1)
+number_of_failures = [0]*(ads+1)
+ads_played = []
+total_ads_selected = [0]*(ads+1)
+
+for i in range(1, 10000):
+    sample = [0]*(ads + 1)
+    for j in range(0, ads+1):
+        sample[j] = random.betavariate(number_of_successes[j] + 1, number_of_failures[j] + 1)
+    sample_to_play = sample.index(max(sample))
+    
+    if data_frame.values[i, sample_to_play] == 1:
+        number_of_successes[sample_to_play] += 1
+    else:
+        number_of_failures[sample_to_play] += 1
+    ads_played.append(sample_to_play)
+    total_ads_selected[sample_to_play] += 1
+        
+
+plot.hist(ads_played)
